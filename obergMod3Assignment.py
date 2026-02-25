@@ -194,8 +194,8 @@ class Main:
                 except Exception:
                     print("Invalid difficulty — must be an integer")
                     continue
-                if difficulty < 1 or difficulty > 5:
-                    print("Difficulty should be a positive integer (recommended 1-3)")
+                if difficulty < 1 or difficulty > 3:
+                    print("Difficulty must be between 1 and 3")
                     continue
                 new_task = Task(title, description, difficulty, "Incomplete")
                 manager.addTask(new_task)
@@ -228,7 +228,10 @@ class Main:
                 try:
                     new_diff = int(input("New difficulty (1-3): ").strip())
                 except Exception:
-                    print("Invalid difficulty")
+                    print("Invalid difficulty — must be an integer")
+                    continue
+                if new_diff < 1 or new_diff > 3:
+                    print("Difficulty must be between 1 and 3")
                     continue
                 manager.TaskList[idx].editTask(new_title, new_desc, new_diff)
 

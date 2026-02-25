@@ -164,23 +164,28 @@ class Test:
         print("\n===== END OF DEMO =====")
 
 
-# Main class provides interactive menu and delegates demo to Test
+# Main class now provides a simple interactive menu and delegates the demo to Test
 class Main:
 
+    # method to run the interactive menu for task management
     @staticmethod
     def run():
         print("===== TASK MANAGEMENT SYSTEM (INTERACTIVE) =====\n")
 
+        # Create a TaskManager and Mood tracker used by the interactive session
         manager = TaskManager()
         mood = Mood()
 
+        # Main interactive loop: present options and handle user commands
         while True:
             print("Options:\n  1) Run demo (non-interactive)\n  2) Add task\n  3) List tasks\n  4) Edit task\n  5) Mark task complete\n  6) Remove task\n  7) Set mood\n  8) Show recommended tasks\n  9) Exit")
             choice = input("Enter choice (1-9): ").strip()
 
+            # Run the demo version of the workflow
             if choice == '1':
                 Test.run()
 
+            # Add a new task: collect title, description, difficulty and append
             elif choice == '2':
                 title = input("Title: ").strip()
                 description = input("Description: ").strip()
@@ -195,6 +200,7 @@ class Main:
                 new_task = Task(title, description, difficulty, "Incomplete")
                 manager.addTask(new_task)
 
+            # List current tasks with basic details
             elif choice == '3':
                 if not manager.TaskList:
                     print("No tasks in the list")
@@ -202,6 +208,7 @@ class Main:
                     for i, task in enumerate(manager.TaskList, 1):
                         print(f"{i}) Title='{task.title}', Description='{task.description}', Difficulty={task.difficulty}, Status='{task.status}'")
 
+            # Edit an existing task by selecting its index then updating fields
             elif choice == '4':
                 if not manager.TaskList:
                     print("No tasks to edit")
@@ -225,6 +232,7 @@ class Main:
                     continue
                 manager.TaskList[idx].editTask(new_title, new_desc, new_diff)
 
+            # Mark a task as complete by index
             elif choice == '5':
                 if not manager.TaskList:
                     print("No tasks to mark complete")
@@ -241,6 +249,7 @@ class Main:
                     continue
                 manager.TaskList[idx].markComplete()
 
+            # Remove a task by index
             elif choice == '6':
                 if not manager.TaskList:
                     print("No tasks to remove")
@@ -257,10 +266,12 @@ class Main:
                     continue
                 manager.removeTask(manager.TaskList[idx])
 
+            # Set current mood for recommendations
             elif choice == '7':
                 new_mood = input("Set mood (Happy/Sad/Neutral): ").strip()
                 mood.setMood(new_mood)
 
+            # Show recommended tasks based on current mood
             elif choice == '8':
                 recommended = mood.getRecommendedTasks(manager.TaskList)
                 if recommended:
@@ -270,6 +281,7 @@ class Main:
                 else:
                     print("No recommended tasks for current mood or no tasks available")
 
+            # Exit the interactive loop
             elif choice == '9' or choice.lower() in ('q', 'quit', 'exit'):
                 print("Exiting. Goodbye!")
                 break
